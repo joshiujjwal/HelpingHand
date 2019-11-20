@@ -1,5 +1,8 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Elder Wand, an e-learning platform aims at providing educational content enabling veterans and senior citizens (the elderly) to keep up with the pace of technological advancement and automation.  With continuous feedback and analysis of progress in the form of gamification, courses including but not limited to digital marketing, social media management,  and graphics  design being offered on this platform will help students learn new skills with social learning/engagement. 
+
+Elder Wand also provides a job marketplace for students and recruiters to connect and students eventually apply skills and knowledge gained on the platform on real world problems and are able to earn a living. The application also places a huge focus on accessibility to provide a befitting user experience to its users, seeing as the target audience are senior citizens. Thus, the application provides a collaborative environment for users to achieve a common goal of learning.
+
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
