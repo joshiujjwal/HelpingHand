@@ -21,7 +21,6 @@ from course import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
+    path('signup/', views.SignUp.as_view(), name='signup'),
     path('', views.home, name='home'),
-    
-
 ]
