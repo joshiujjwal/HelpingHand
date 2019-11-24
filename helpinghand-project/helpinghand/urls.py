@@ -20,6 +20,9 @@ from user import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    path('signup/', views.SignUp.as_view(), name='signup'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('signup/student/', views.StudentSignUpView.as_view(), name='student_signup'),
+    path('signup/instructor/', views.InstructorSignUpView.as_view(), name='instructor_signup'),
+    path('signup/recruiter/', views.RecruiterSignUpView.as_view(), name='recruiter_signup'),
     path('', views.home, name='home')
 ]
