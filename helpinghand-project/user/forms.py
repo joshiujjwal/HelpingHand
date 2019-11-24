@@ -2,16 +2,22 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
-from .models import Profile, User
+from .models import UserProfile, User
 
 from course.models import Course
 
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
 class StudentSignUpForm(UserCreationForm):
-    interests = forms.ModelMultipleChoiceField(
-        queryset=Course.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=True
-    )
+    # interests = forms.ModelMultipleChoiceField(
+    #     queryset=Course.objects.all(),
+    #     widget=forms.CheckboxSelectMultiple,
+    #     required=True
+    # )
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("username","first_name","last_name","email")
@@ -25,8 +31,8 @@ class StudentSignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_student = True
         user.save()
-        profile_interests = Profile.objects.create(user=user)
-        profile_interests.interests.add(*self.cleaned_data.get('interests'))
+        # profile = UserProfile.objects.get(user=user)
+        # profile.interests.add(*self.cleaned_data.get('interests'))
         return user
 
 
@@ -51,7 +57,7 @@ class RecruiterSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("username","first_name","last_name","email")
-        
+
     email = forms.EmailField(max_length=75, required=True)
     first_name = forms.CharField(max_length=75, required=True)
     last_name = forms.CharField(max_length=75, required=True)
