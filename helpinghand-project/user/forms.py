@@ -7,6 +7,7 @@ from .models import Student, Subject, User
 class StudentSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
+        fields = ("username", "email",)
 
     @transaction.atomic
     def save(self):
@@ -19,6 +20,8 @@ class StudentSignUpForm(UserCreationForm):
 class InstructorSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
+        fields = ("username", "email",)
+
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -31,6 +34,8 @@ class InstructorSignUpForm(UserCreationForm):
 class RecruiterSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
+        fields = ("username", "email",)
+
 
     def save(self, commit=True):
         user = super().save(commit=False)
