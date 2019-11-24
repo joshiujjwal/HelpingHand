@@ -8,6 +8,7 @@ from .forms import *
 from django.forms.models import inlineformset_factory
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 import time
@@ -82,11 +83,12 @@ def edit_user(request, pk):
                 if formset.is_valid():
                     created_user.save()
                     formset.save()
-                    return HttpResponseRedirect('/')
+                    messages.success(request, 'Changes successfully saved.')
+                    return HttpResponseRedirect('/user/update/{}'.format(pk))
 
         return render(request, "user/profile_update.html", {
-            "noodle": pk,
-            "noodle_form": user_form,
+            "pk": pk,
+            "form": user_form,
             "formset": formset,
         })
     else:
