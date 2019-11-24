@@ -2,9 +2,16 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
-from .models import Profile, Subject, User
+from .models import Profile, User
+
+from course.models import Course
 
 class StudentSignUpForm(UserCreationForm):
+    interests = forms.ModelMultipleChoiceField(
+        queryset=Course.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("username", "email",)
@@ -14,6 +21,8 @@ class StudentSignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_student = True
         user.save()
+        profile_interests = Profile.objects.create(user=user)
+        profile_interests.interests.add(*self.cleaned_data.get('interests'))
         return user
 
 
