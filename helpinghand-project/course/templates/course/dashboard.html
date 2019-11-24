@@ -1,0 +1,32 @@
+<!-- templates/course/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+{% if user.is_student %}
+<div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+
+        <form method="post">
+                {%csrf_token%}
+                {{form.as_p}}
+        <input type="submit" class="btn btn-dark btn-lg" value="Enroll in a Course">
+
+        
+    </form>
+
+{% elif user.is_instructor %}
+
+{% else %}
+
+
+
+{% endif %}
+
+{% endif %}
+
+
+{% endblock %}
