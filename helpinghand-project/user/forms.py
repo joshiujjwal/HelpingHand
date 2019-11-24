@@ -14,7 +14,11 @@ class StudentSignUpForm(UserCreationForm):
     )
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "email",)
+        fields = ("username","first_name","last_name","email")
+    
+    email = forms.EmailField(max_length=75, required=True)
+    first_name = forms.CharField(max_length=75, required=True)
+    last_name = forms.CharField(max_length=75, required=True)
 
     @transaction.atomic
     def save(self):
@@ -29,8 +33,11 @@ class StudentSignUpForm(UserCreationForm):
 class InstructorSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "email",)
+        fields = ("username","first_name","last_name","email")
 
+    email = forms.EmailField(max_length=75, required=True)
+    first_name = forms.CharField(max_length=75, required=True)
+    last_name = forms.CharField(max_length=75, required=True)
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -43,8 +50,11 @@ class InstructorSignUpForm(UserCreationForm):
 class RecruiterSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "email",)
-
+        fields = ("username","first_name","last_name","email")
+        
+    email = forms.EmailField(max_length=75, required=True)
+    first_name = forms.CharField(max_length=75, required=True)
+    last_name = forms.CharField(max_length=75, required=True)
 
     def save(self, commit=True):
         user = super().save(commit=False)
