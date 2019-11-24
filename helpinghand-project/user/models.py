@@ -8,7 +8,7 @@ class User(AbstractUser):
     is_instructor = models.BooleanField(default=False)
     is_recruiter = models.BooleanField(default=False)
 
-class Student(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
 
