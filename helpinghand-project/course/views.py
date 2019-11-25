@@ -12,15 +12,17 @@ from .models import Course
 @login_required
 @student_required
 def dashboard(request):
-    form = EnrollForm()
+    form = EnrollForm(initial={"name": "qweer"})
     if request.method == 'POST':
         form = EnrollForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
             user = User.objects.get(id=request.user.id)
             user_profile = UserProfile.objects.get(user=user)
-            enrolled_course = user_profile.enrolled_courses.create(name=name)
-            return HttpResponseRedirect('/course/{}'.format(enrolled_course.pk))
+            enrolled_courses = user_profile.enrolled_courses.filter(name=name)
+            if len(enrolled_courses) == 0:
+                enrolled_course = user_profile.enrolled_courses.create(name=name)
+                return HttpResponseRedirect('/course/{}'.format(enrolled_course.pk))
             
     return render(request, "course/dashboard.html", {"form":form})
 
