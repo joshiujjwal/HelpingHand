@@ -9,7 +9,18 @@
 
 {% if user.is_student %}
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-{% for form in formset %}
+    {% for form in enrolled_formset %}
+    <form method="post">
+        {%csrf_token%}
+        {{form.name}}
+        <a class="btn btn-light btn-lg" href="{% url 'course' pk=form.initial.course_id %}"> Go to Course</a>
+        <input type="submit" class="btn btn-dark btn-lg" value="Unenroll">
+        <hr>
+
+    </form>
+    {% endfor %}
+
+    {% for form in available_formset %}
     <form method="post">
         {%csrf_token%}
 
@@ -17,7 +28,6 @@
         {{form}}
         <input type="submit" class="btn btn-dark btn-lg" value="Enroll in a Course">
         <hr>
-
 
     </form>
     {% endfor %}
