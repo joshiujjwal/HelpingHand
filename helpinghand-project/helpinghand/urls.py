@@ -16,15 +16,18 @@ Including another URLconf
 from django.urls import path, include
 from django.conf.urls import url
 from django.contrib import admin
-from user import views
+from user import views as user_views
+from course import views as course_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    path('signup/', views.SignUpView.as_view(), name='signup'),
-    path('signup/student/', views.StudentSignUpView.as_view(), name='student_signup'),
-    path('signup/instructor/', views.InstructorSignUpView.as_view(), name='instructor_signup'),
-    path('signup/recruiter/', views.RecruiterSignUpView.as_view(), name='recruiter_signup'),
-    url(r'^user/update/(?P<pk>[\-\w]+)/$', views.edit_user, name='profile_update'),
-    path('', views.home, name='home')
+    path('signup/', user_views.SignUpView.as_view(), name='signup'),
+    path('signup/student/', user_views.StudentSignUpView.as_view(), name='student_signup'),
+    path('signup/instructor/', user_views.InstructorSignUpView.as_view(), name='instructor_signup'),
+    path('signup/recruiter/', user_views.RecruiterSignUpView.as_view(), name='recruiter_signup'),
+    url(r'^user/update/(?P<pk>[\-\w]+)/$', user_views.edit_user, name='profile_update'),
+    path('dashboard/', course_views.dashboard, name='dashboard'),
+    url(r'course/(?P<pk>[\-\w]+)/$', course_views.course, name='course'),
+    path('', user_views.home, name='home'),
 ]
