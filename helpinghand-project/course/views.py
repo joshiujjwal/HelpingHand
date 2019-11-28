@@ -12,19 +12,22 @@ from .models import Course
 @login_required
 @student_required
 def dashboard(request):
-    form = EnrollForm(initial={"name": "qweer"})
+    user_profile = UserProfile.objects.get(user_id=request.user.id)
+    enrolled_course = user_profile.enrolled_courses.all().values_list('name', flat=True)
+    available_courses = list(Course.objects.exclude(name__in=enrolled_course).values_list('name', flat=True))
+    #print("enrolled_course -------- ",enrolled_course)
+    #print("available_courses ------- ", available_courses)
+    formset = []
+    for course in available_courses:
+        formset.append(EnrollForm(initial={"name":course},prefix=course))
     if request.method == 'POST':
-        form = EnrollForm(request.POST)
+        form = EnrollForm(request.POST, prefix=list(request.POST)[1].split("-")[0])
         if form.is_valid():
             name = form.cleaned_data["name"]
-            user = User.objects.get(id=request.user.id)
-            user_profile = UserProfile.objects.get(user=user)
-            enrolled_courses = user_profile.enrolled_courses.filter(name=name)
-            if len(enrolled_courses) == 0:
-                enrolled_course = user_profile.enrolled_courses.create(name=name)
-                return HttpResponseRedirect('/course/{}'.format(enrolled_course.pk))
-            
-    return render(request, "course/dashboard.html", {"form":form})
+            request_enroll = Course.objects.get(name=name)
+            user_profile.enrolled_courses.add(request_enroll)
+            return HttpResponseRedirect('/course/{}'.format(request_enroll.pk))
+    return render(request, "course/dashboard.html", {"formset":formset})
 
 @login_required
 @student_required

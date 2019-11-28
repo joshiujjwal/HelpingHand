@@ -9,7 +9,7 @@
 
 {% if user.is_student %}
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-
+{% for form in formset %}
     <form method="post">
         {%csrf_token%}
 
@@ -20,7 +20,7 @@
 
 
     </form>
-
+    {% endfor %}
     {% elif user.is_instructor %}
 
     {% else %}
