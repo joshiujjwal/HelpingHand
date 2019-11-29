@@ -17,6 +17,8 @@ from django.urls import path, include
 from django.conf.urls import url
 from django.contrib import admin
 from user import views
+from jobs import views as job_view
+from course import views as course_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +28,9 @@ urlpatterns = [
     path('signup/instructor/', views.InstructorSignUpView.as_view(), name='instructor_signup'),
     path('signup/recruiter/', views.RecruiterSignUpView.as_view(), name='recruiter_signup'),
     url(r'^user/update/(?P<pk>[\-\w]+)/$', views.edit_user, name='profile_update'),
-    path('', views.home, name='home')
+    path('', views.home, name='home'),
+    path('jobs/',job_view.job,name ='job'),
+    path('jobs/listing/', job_view.job_listing_page, name='job_listing'),
+    path('course/', course_view.course_upload, name='course_upload')
+
 ]

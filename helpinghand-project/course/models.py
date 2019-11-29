@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils.html import escape, mark_safe
 
+
+
 # Create your models here.
 class Course(models.Model):
     name = models.CharField(max_length=30)
+    course_syllabus = models.FileField()
     color = models.CharField(max_length=7, default='#007bff')
 
     def __str__(self):
@@ -14,3 +17,6 @@ class Course(models.Model):
         color = escape(self.color)
         html = '<span class="badge badge-primary" style="background-color: %s">%s</span>' % (color, name)
         return mark_safe(html)
+
+
+
