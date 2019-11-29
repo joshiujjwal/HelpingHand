@@ -14,3 +14,12 @@ class EnrollForm(forms.ModelForm):
         model = Course
         fields = ['name',]
     course_id = forms.IntegerField(widget = forms.HiddenInput(), required = False)
+
+
+class CourseRegisterForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CourseRegisterForm, self).__init__(*args, **kwargs)
+        
+    class Meta:
+        model = Course
+        fields = ['name',]

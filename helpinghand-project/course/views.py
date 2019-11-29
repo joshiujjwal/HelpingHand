@@ -3,17 +3,30 @@ from  django.forms import formset_factory
 from .forms import *
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from user.decorators import student_required
+from user.decorators import student_required, instructor_required
 from django.contrib import messages
 
 
 from user.models import User
 from .models import Course
 
+@login_required
+def dashboard(request):
+    user = User.objects.get(id=request.user.id)
+    if user.is_student:
+        return student_dashboard(request)
+    else:
+        if user.is_instructor:
+            return instructor_dashboard(request)
+        else:
+            if user.is_recruiter:
+                return recruiter_dashboard(request)
+            else:
+                return HttpResponseRedirect('/login')
 
 @login_required
 @student_required
-def dashboard(request):
+def student_dashboard(request):
     user_profile = UserProfile.objects.get(user_id=request.user.id)
     enrolled_course = user_profile.enrolled_courses.all().values_list('name', flat=True)
     available_courses = list(Course.objects.exclude(name__in=enrolled_course).values_list('name', flat=True))
@@ -41,6 +54,20 @@ def dashboard(request):
             messages.success(request, 'Successfully unenrolled from course ', name)
             return HttpResponseRedirect('/dashboard')
     return render(request, "course/dashboard.html", {"available_formset":available_formset, "enrolled_formset":enrolled_formset })
+
+@login_required
+@instructor_required
+def instructor_dashboard(request):
+    user_profile = UserProfile.objects.get(user_id=request.user.id)
+    form = CourseRegisterForm()
+    if request.method == "POST":
+        form = CourseRegisterForm(request.POST)
+        if form.is_valid():
+            name=form.cleaned_data["name"]
+            user_profile.enrolled_courses.create(name=name)
+            messages.success(request,"Course created")
+            return HttpResponseRedirect('/dashboard')
+    return render(request, 'course/dashboard.html', {"form":form})
 
 @login_required
 @student_required

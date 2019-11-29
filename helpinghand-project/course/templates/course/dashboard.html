@@ -33,6 +33,16 @@
     {% endfor %}
     {% elif user.is_instructor %}
 
+
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        
+        <form method="post">
+            {%csrf_token%}
+        
+        {{form}}
+        <input type="submit" class="btn btn-dark btn-lg" value="Add a Course">
+        </form>
+
     {% else %}
 
 
