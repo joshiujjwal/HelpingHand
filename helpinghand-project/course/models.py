@@ -7,6 +7,9 @@ from django.utils.html import escape, mark_safe
 class Course(models.Model):
     name = models.CharField(max_length=30)
     course_syllabus = models.FileField()
+    overview = models.CharField(max_length=200,default ='')
+    videos= models.FileField(default='')
+    quiz = models.FileField(default='')
     color = models.CharField(max_length=7, default='#007bff')
 
     def __str__(self):

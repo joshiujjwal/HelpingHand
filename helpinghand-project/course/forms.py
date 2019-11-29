@@ -9,5 +9,5 @@ from .models import Course
 class Course_form(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['name','course_syllabus']
+        fields = ['name','course_syllabus','overview','videos','quiz']
 

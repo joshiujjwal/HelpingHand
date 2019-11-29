@@ -19,7 +19,6 @@ def course_upload(request):
     course_form = Course_form()
     if request.method == "POST":
         course_form = Course_form(request.POST, request.FILES)
-
         if course_form.is_valid():
             course_form.save()
             return redirect('home')
