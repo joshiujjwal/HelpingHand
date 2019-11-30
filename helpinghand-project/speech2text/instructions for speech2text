@@ -1,0 +1,10 @@
+1)Prerequisites speech2text
+
+pip install SpeechRecognition
+pip install pydub
+pip install youtube_transcript_api
+
+2) To run and generate transcript
+-- input the new ids and name of videos in the video dictionary in speech2text.py file
+run python speech2text.py
+
