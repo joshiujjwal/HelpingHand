@@ -43,6 +43,17 @@
         <input type="submit" class="btn btn-dark btn-lg" value="Add a Course">
         </form>
 
+        <hr>
+        My Courses
+        <hr>
+        {%for course in enrolled_course%}
+
+        {{course.name}}  <a class="btn btn-light btn-lg" href="{% url 'course' pk=course.id %}"> Go to Course</a>
+
+        <br>
+
+        {%endfor%}
+
     {% else %}
 
 

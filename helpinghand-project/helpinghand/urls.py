@@ -19,6 +19,7 @@ from django.contrib import admin
 from user import views as user_views
 from course import views as course_views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
@@ -28,6 +29,6 @@ urlpatterns = [
     path('signup/recruiter/', user_views.RecruiterSignUpView.as_view(), name='recruiter_signup'),
     url(r'^user/update/(?P<pk>[\-\w]+)/$', user_views.edit_user, name='profile_update'),
     path('dashboard/', course_views.dashboard, name='dashboard'),
-    url(r'^course/(?P<pk>\d+)/$', course_views.course, name='course'),
+    path('course/<int:c_pk>/',include('course.urls', namespace='course')),
     path('', user_views.home, name='home'),
 ]

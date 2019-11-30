@@ -5,6 +5,54 @@
 
 {% block content %}
 
-<h4> Welcome to course --</h4> {{course}}
+<h4> Welcome to course -- {{course}}</h4>
+{% if user.is_authenticated %}
 
+{% if user.is_student %}
+{% elif user.is_instructor %}
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab"
+            aria-controls="nav-video" aria-selected="true">Home</a>
+        <a class="nav-item nav-link" id="nav-quiz-tab" data-toggle="tab" href="#nav-quiz" role="tab"
+            aria-controls="nav-quiz" aria-selected="false">Quiz</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
+
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
+        {{all_current_videos}}
+        <hr> Add Videos<br>
+        <form method="post">
+            {%csrf_token%}
+            {{video_form}}
+            <input type="submit" class="btn btn-dark btn-lg" value="Post a video">
+            <hr>
+
+        </form>
+
+
+
+    </div>
+    <div class="tab-pane fade" id="nav-quiz" role="tabpanel" aria-labelledby="nav-quiz-tab">QUIZZES</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% else %}
+
+{% endif %}
+
+{% endif %}
 {% endblock %}
