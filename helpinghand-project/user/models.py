@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from course.models import *
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 
@@ -12,7 +11,6 @@ class User(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='user')
-    enrolled_courses = models.ManyToManyField(Course, related_name='enrolled_courses')
     photo = models.FileField(verbose_name=_("Profile Picture"),upload_to='images/profile_pictures', max_length=255, null=True, blank=True)
     bio = models.TextField(default='', blank=True)
     phone = models.CharField(max_length=20, blank=True, default='')
