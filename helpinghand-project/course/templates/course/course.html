@@ -20,8 +20,11 @@
     </li>
   </ul>
 
-  {{all_videos}}
+  {% for videos in all_videos%}
+  {{ videos.url|safe }}
+  <br>
 
+  {% endfor %}
 {% elif user.is_instructor %}
 
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
