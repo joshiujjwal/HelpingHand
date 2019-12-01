@@ -14,8 +14,8 @@
   </ul>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'teachers:quiz_change_list' request.user.pk %}">My Quizzes</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'teachers:quiz_change' request.user.pk quiz.pk %}">{{ quiz.name }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'course:quiz_change_list' request.user.pk %}">My Quizzes</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'course:quiz_change' request.user.pk quiz.pk %}">{{ quiz.name }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Results</li>
     </ol>
   </nav>
