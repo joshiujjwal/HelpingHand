@@ -7,24 +7,27 @@
 
 <h2>Job Listings</h2>
 <table style="width:100%">
-  <tr>
-    <th>Job Name</th>
-    <th>Job Description</th>
+      <tr>
+    <th>Job name</th>
+    <th>Job description</th>
     <th>Skills Needed</th>
-      <th>Hourly Pay</th>
+          <th>Hourly Pay</th>
+
 
   </tr>
 
+
 {% for job in jobs %}
+
+
     <tr>
-        <td>{{job.job_name}}</td>
-        <td>{{job.job_description}}</td>
-        <td>{{job.skills_needed}}</td>
+        <td><li>{{job}}</li></td>
+        <td>{{job.description}}</td>
+    <td>{{job.skills_needed}}</td>
         <td>{{job.hourly_pay}}</td>
-
-
     </tr>
 {%endfor%}
         </table>
+
 
 {% endblock %}
