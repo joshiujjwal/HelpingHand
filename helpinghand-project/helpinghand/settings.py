@@ -88,9 +88,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':  'helpinghand',
-        'USER': 'hhuser',
-        'PASSWORD': 'elderwand1234',
-        'HOST': 'localhost',
+        'USER': 'hhuser@helpinghanddb',
+        'PASSWORD': 'Elderwand1234$',
+        'HOST': 'helpinghanddb.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
