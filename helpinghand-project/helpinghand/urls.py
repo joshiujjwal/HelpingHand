@@ -18,6 +18,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from user import views as user_views
 from course import views as course_views
+from jobs import views as job_view
 
 
 urlpatterns = [
@@ -31,4 +32,7 @@ urlpatterns = [
     path('dashboard/', course_views.dashboard, name='dashboard'),
     path('course/<int:c_pk>/',include('course.urls', namespace='course')),
     path('', user_views.home, name='home'),
+    path('jobs/',job_view.job,name ='job'),
+    path('jobs/listing/', job_view.job_listing_page, name='job_listing'),
+
 ]

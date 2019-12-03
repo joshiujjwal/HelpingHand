@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<!--{% extends 'base.html' %}-->
+
+<!--{% block title %}Job Upload{% endblock %}-->
+
+{% load crispy_forms_tags%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job</title>
+</head>
+<body>
+<h2> Welcome to job page
+
+<form method="POST">
+    {%csrf_token%}
+    {{jobForm|crispy}}
+    <input type="submit">
+
+</form>
+
+</h2>
+</body>
+</html>
