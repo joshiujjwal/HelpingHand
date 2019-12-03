@@ -21,7 +21,12 @@
   </ul>
 
   {% for videos in all_videos%}
-  {{ videos.url|safe }}
+  {{ videos.url}}
+<details>
+    <summary>View Transcript</summary>
+
+  {{ videos.transcript}}
+</details>
   <br>
 
   {% endfor %}

@@ -12,6 +12,7 @@ from django.db.models import Count, Avg
 from django.forms import inlineformset_factory
 from user.models import User
 from .models import *
+from speech2text.speech2text import transcription
 
 @login_required
 def dashboard(request):
@@ -102,15 +103,23 @@ def instructor_course(request,pk):
     if request.method == "POST":
         form = VideosForm(request.POST)
         if form.is_valid():
+            video = form.save(commit=False)
             name = form.cleaned_data["name"]
             url = form.cleaned_data["url"]
-            video = form.save(commit=False)
+            transcription(name,url)
+            file1= open("transcript_"+name+".txt","r+")
+            transcript = file1.read()
+            print(transcript)
             video.owner_id = request.user.id
             video.subject_id = pk
+            video.transcript = transcript
             video.save()
             messages.success(request,"Video added")
+            print(Videos.objects.get(name=name))
             return HttpResponseRedirect('/course/{}'.format(pk))
     return render(request, "course/course.html", {"pk": pk, "course": course_name, "video_form":video_form, "all_current_videos":all_current_videos})
+
+
 
 
 @method_decorator([login_required, instructor_required], name='dispatch')

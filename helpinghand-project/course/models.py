@@ -29,6 +29,7 @@ class Videos(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField()
     subject = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='videos')
+    transcript = models.TextField(default ="")
 
     def __str__(self):
         return self.name
