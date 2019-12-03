@@ -1,24 +1,18 @@
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<!--{% extends 'base.html' %}-->
-<!--{% block title %}Job Listing{% endblock %}-->
+{% block title %}Job_Listing{% endblock %}
+
+{% block content %}
 
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<h2>Job Listings</h2>
+<table>
 
-</head>
-    <table style="width:100%">
-
-<body>
 {% for job in jobs %}
     <tr>
         <td>{{job}}</td>
     </tr>
 {%endfor%}
-</body>
         </table>
 
-</html>
+{% endblock %}

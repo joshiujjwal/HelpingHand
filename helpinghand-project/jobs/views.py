@@ -26,7 +26,7 @@ def job(request):
             jobForm.save()
     return render(request, 'job_upload.html', {"jobForm":jobForm})
 
-@login_required
+
 @student_required
 def job_listing_page(request):
     jobs = Job.objects.all()
