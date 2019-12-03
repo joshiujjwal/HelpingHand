@@ -16,6 +16,7 @@ from .models import *
 @login_required
 def dashboard(request):
     user = User.objects.get(id=request.user.id)
+    print(request.user.id)
     if user.is_student:
         return student_dashboard(request)
     else:
