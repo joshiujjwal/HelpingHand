@@ -150,7 +150,7 @@ class QuizCreateView(CreateView):
         quiz.course = Course.objects.get(id=self.request.user.pk)
         quiz.save()
         messages.success(self.request, 'The quiz was created with success! Go ahead and add some questions now.')
-        return redirect('course:quiz_change', request.c_pk, quiz.pk)
+        return redirect('course:quiz_change', self.request.path.split("/")[2], quiz.pk)
 
 
 @method_decorator([login_required, instructor_required], name='dispatch')
@@ -173,7 +173,7 @@ class QuizUpdateView(UpdateView):
         return self.request.user.quizzes.all()
 
     def get_success_url(self):
-        return reverse('course:quiz_change', kwargs={'pk': self.object.pk, 'c_pk': self.object.c_pk})
+        return reverse('course:quiz_change', kwargs={'pk': self.object.pk, 'c_pk': self.request.path.split("/")[2]})
 
 
 @method_decorator([login_required, instructor_required], name='dispatch')
@@ -181,7 +181,11 @@ class QuizDeleteView(DeleteView):
     model = Quiz
     context_object_name = 'quiz'
     template_name = 'course/quiz_delete_confirm.html'
-    success_url = reverse_lazy('course:quiz_change_list')
+
+    def get_success_url(self):
+        c_pk = self.kwargs['c_pk']
+        print(c_pk)
+        return reverse_lazy('course:quiz_change_list', kwargs={'c_pk': self.request.path.split("/")[2]})
 
     def delete(self, request, *args, **kwargs):
         quiz = self.get_object()
@@ -221,6 +225,7 @@ def question_add(request,c_pk, pk):
     # by the owner, which is the logged in user, we are protecting
     # this view at the object-level. Meaning only the owner of
     # quiz will be able to add questions to it.
+    print(c_pk)
     quiz = get_object_or_404(Quiz, pk=pk, owner=request.user)
 
     if request.method == 'POST':
@@ -302,7 +307,7 @@ class QuestionDeleteView(DeleteView):
 
     def get_success_url(self):
         question = self.get_object()
-        return reverse('course:quiz_change', kwargs={'pk': question.quiz_id})
+        return reverse('course:quiz_change', kwargs={'pk': question.quiz_id, 'c_pk': self.request.path.split("/")[2]})
 
 
 @method_decorator([login_required, student_required], name='dispatch')
