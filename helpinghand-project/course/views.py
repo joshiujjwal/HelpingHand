@@ -69,9 +69,13 @@ def instructor_dashboard(request):
         form = CourseRegisterForm(request.POST)
         if form.is_valid():
             name=form.cleaned_data["name"]
-            user_profile.enrolled_courses.create(name=name)
-            messages.success(request,"Course created")
-            return HttpResponseRedirect('/dashboard')
+            if not Course.objects.get(name=name):
+                user_profile.enrolled_courses.create(name=name)
+                messages.success(request,"Course created")
+                return HttpResponseRedirect('/dashboard')
+            else:
+                messages.success(request,"Course with same name exists")
+                return HttpResponseRedirect('/dashboard')             
     return render(request, 'course/dashboard.html', {"form":form, "enrolled_course":enrolled_course})
 
 
@@ -147,7 +151,7 @@ class QuizCreateView(CreateView):
     def form_valid(self, form):
         quiz = form.save(commit=False)
         quiz.owner = self.request.user
-        quiz.course = Course.objects.get(id=self.request.user.pk)
+        quiz.course = Course.objects.get(id=self.request.path.split("/")[2])
         quiz.save()
         messages.success(self.request, 'The quiz was created with success! Go ahead and add some questions now.')
         return redirect('course:quiz_change', self.request.path.split("/")[2], quiz.pk)
