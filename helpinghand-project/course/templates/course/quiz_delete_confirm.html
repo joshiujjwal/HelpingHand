@@ -24,6 +24,6 @@
   <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
-    <a href="{% url 'course:quiz_change' request.user.pk quiz.pk %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
+    <a href="{% url 'course:quiz_change' request.c_pk request.user.pk quiz.pk %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
   </form>
 {% endblock %}
