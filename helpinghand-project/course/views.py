@@ -69,13 +69,13 @@ def instructor_dashboard(request):
         form = CourseRegisterForm(request.POST)
         if form.is_valid():
             name=form.cleaned_data["name"]
-            if not Course.objects.get(name=name):
+            if not Course.objects.filter(name=name).exists():
                 user_profile.enrolled_courses.create(name=name)
                 messages.success(request,"Course created")
                 return HttpResponseRedirect('/dashboard')
             else:
                 messages.success(request,"Course with same name exists")
-                return HttpResponseRedirect('/dashboard')             
+                return HttpResponseRedirect('/dashboard')
     return render(request, 'course/dashboard.html', {"form":form, "enrolled_course":enrolled_course})
 
 
