@@ -10,6 +10,9 @@
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'course:quiz_list' request.path|split:'/'|getValue:'2' %}">Quiz</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link " href="{% url 'course:taken_quiz_list' request.path|split:'/'|getValue:'2' %}">Grades</a>
+    </li>
   </ul>
 
   <div class="card">

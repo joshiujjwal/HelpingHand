@@ -18,6 +18,9 @@
     <li class="nav-item">
       <a class="nav-link" href="{% url 'course:quiz_list' c_pk %}">Quiz</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'course:taken_quiz_list' c_pk %}">Grades</a>
+    </li>
   </ul>
 
   {% for videos in all_videos%}
