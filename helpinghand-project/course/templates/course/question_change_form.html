@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load filter_tags%}
 
 {% load crispy_forms_tags crispy_forms_filters %}
 
@@ -6,25 +7,25 @@
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-      <a class="nav-link " href="{% url 'course:course' request.user.pk%}">Videos</a>
+      <a class="nav-link " href="{% url 'course:course' request.path|split:'/'|getValue:'2'%}">Videos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" href="{% url 'course:quiz_change_list' request.user.pk %}">Quiz</a>
+      <a class="nav-link active" href="{% url 'course:quiz_change_list' request.path|split:'/'|getValue:'2' %}">Quiz</a>
     </li>
   </ul>
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-      <a class="nav-link active" href="{% url 'course:course' request.user.pk%}">Videos</a>
+      <a class="nav-link active" href="{% url 'course:course' request.path|split:'/'|getValue:'2'%}">Videos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'course:quiz_change_list' request.user.pk %}">Quiz</a>
+      <a class="nav-link" href="{% url 'course:quiz_change_list' request.path|split:'/'|getValue:'2' %}">Quiz</a>
     </li>
   </ul>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'course:quiz_change_list' request.user.pk %}">My Quizzes</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'course:quiz_change' request.user.pk quiz.pk %}">{{ quiz.name }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'course:quiz_change_list' request.path|split:'/'|getValue:'2' %}">My Quizzes</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'course:quiz_change' request.path|split:'/'|getValue:'2' quiz.pk %}">{{ quiz.name }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ question.text }}</li>
     </ol>
   </nav>
@@ -76,7 +77,7 @@
       <small class="form-text text-muted">Your question may have at least <strong>2</strong> answers and maximum <strong>10</strong> answers. Select at least one correct answer.</small>
     </p>
     <button type="submit" class="btn btn-success">Save changes</button>
-    <a href="{% url 'course:quiz_change' request.user.pk quiz.pk %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
-    <a href="{% url 'course:question_delete' request.user.pk quiz.pk question.pk %}" class="btn btn-danger float-right">Delete</a>
+    <a href="{% url 'course:quiz_change' request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+    <a href="{% url 'course:question_delete' request.path|split:'/'|getValue:'2' quiz.pk question.pk %}" class="btn btn-danger float-right">Delete</a>
   </form>
 {% endblock %}

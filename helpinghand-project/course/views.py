@@ -12,6 +12,8 @@ from django.db.models import Count, Avg
 from django.forms import inlineformset_factory
 from user.models import User
 from .models import *
+from speech2text.speech2text import transcription
+from jobs.views import job as job
 
 @login_required
 def dashboard(request):
@@ -23,7 +25,7 @@ def dashboard(request):
             return instructor_dashboard(request)
         else:
             if user.is_recruiter:
-                return recruiter_dashboard(request)
+                return job(request)
             else:
                 return HttpResponseRedirect('/login')
 
@@ -68,9 +70,13 @@ def instructor_dashboard(request):
         form = CourseRegisterForm(request.POST)
         if form.is_valid():
             name=form.cleaned_data["name"]
-            user_profile.enrolled_courses.create(name=name)
-            messages.success(request,"Course created")
-            return HttpResponseRedirect('/dashboard')
+            if not Course.objects.filter(name=name).exists():
+                user_profile.enrolled_courses.create(name=name)
+                messages.success(request,"Course created")
+                return HttpResponseRedirect('/dashboard')
+            else:
+                messages.success(request,"Course with same name exists")
+                return HttpResponseRedirect('/dashboard')
     return render(request, 'course/dashboard.html', {"form":form, "enrolled_course":enrolled_course})
 
 
@@ -87,30 +93,38 @@ def course(request,c_pk):
 
 @login_required
 @student_required
-def student_course(request,pk):
-    course_name = Course.objects.get(id=pk)
-    all_videos = Videos.objects.filter(subject_id=pk)
-    return render(request, "course/course.html", {"pk": pk, "course": course_name, "all_videos":all_videos})
+def student_course(request,c_pk):
+    course_name = Course.objects.get(id=c_pk)
+    all_videos = Videos.objects.filter(subject_id=c_pk)
+    return render(request, "course/course.html", {"c_pk": c_pk, "course": course_name, "all_videos":all_videos})
 
 
 @login_required
 @instructor_required
-def instructor_course(request,pk):
-    course_name = Course.objects.get(id=pk)
-    all_current_videos = Videos.objects.filter(owner_id=request.user.id).filter(subject_id=pk)
+def instructor_course(request,c_pk):
+    course_name = Course.objects.get(id=c_pk)
+    all_current_videos = Videos.objects.filter(owner_id=request.user.id).filter(subject_id=c_pk)
     video_form = VideosForm()
     if request.method == "POST":
         form = VideosForm(request.POST)
         if form.is_valid():
+            video = form.save(commit=False)
             name = form.cleaned_data["name"]
             url = form.cleaned_data["url"]
-            video = form.save(commit=False)
+            transcription(name,url)
+            file1= open("transcript_"+name+".txt","r+")
+            transcript = file1.read()
+            print(transcript)
             video.owner_id = request.user.id
-            video.subject_id = pk
+            video.subject_id = c_pk
+            video.transcript = transcript
             video.save()
             messages.success(request,"Video added")
-            return HttpResponseRedirect('/course/{}'.format(pk))
-    return render(request, "course/course.html", {"pk": pk, "course": course_name, "video_form":video_form, "all_current_videos":all_current_videos})
+            print(Videos.objects.get(name=name))
+            return HttpResponseRedirect('/course/{}'.format(c_pk))
+    return render(request, "course/course.html", {"c_pk": c_pk, "course": course_name, "video_form":video_form, "all_current_videos":all_current_videos})
+
+
 
 
 @method_decorator([login_required, instructor_required], name='dispatch')
@@ -125,6 +139,7 @@ class InstructorQuizListView(ListView):
             .select_related('course') \
             .annotate(questions_count=Count('questions', distinct=True)) \
             .annotate(taken_count=Count('taken_quizzes', distinct=True))
+        queryset = queryset.filter(course_id=self.request.path.split("/")[2])
         return queryset
 
 
@@ -137,10 +152,10 @@ class QuizCreateView(CreateView):
     def form_valid(self, form):
         quiz = form.save(commit=False)
         quiz.owner = self.request.user
-        quiz.course = Course.objects.get(id=self.request.user.pk)
+        quiz.course = Course.objects.get(id=self.request.path.split("/")[2])
         quiz.save()
         messages.success(self.request, 'The quiz was created with success! Go ahead and add some questions now.')
-        return redirect('course:quiz_change', 4, quiz.pk)
+        return redirect('course:quiz_change', self.request.path.split("/")[2], quiz.pk)
 
 
 @method_decorator([login_required, instructor_required], name='dispatch')
@@ -163,7 +178,7 @@ class QuizUpdateView(UpdateView):
         return self.request.user.quizzes.all()
 
     def get_success_url(self):
-        return reverse('course:quiz_change', kwargs={'pk': self.object.pk})
+        return reverse('course:quiz_change', kwargs={'pk': self.object.pk, 'c_pk': self.request.path.split("/")[2]})
 
 
 @method_decorator([login_required, instructor_required], name='dispatch')
@@ -171,7 +186,11 @@ class QuizDeleteView(DeleteView):
     model = Quiz
     context_object_name = 'quiz'
     template_name = 'course/quiz_delete_confirm.html'
-    success_url = reverse_lazy('course:quiz_change_list')
+
+    def get_success_url(self):
+        c_pk = self.kwargs['c_pk']
+        print(c_pk)
+        return reverse_lazy('course:quiz_change_list', kwargs={'c_pk': self.request.path.split("/")[2]})
 
     def delete(self, request, *args, **kwargs):
         quiz = self.get_object()
@@ -206,11 +225,12 @@ class QuizResultsView(DetailView):
 
 @login_required
 @instructor_required
-def question_add(request, pk):
+def question_add(request,c_pk, pk):
     # By filtering the quiz by the url keyword argument `pk` and
     # by the owner, which is the logged in user, we are protecting
     # this view at the object-level. Meaning only the owner of
     # quiz will be able to add questions to it.
+    print(c_pk)
     quiz = get_object_or_404(Quiz, pk=pk, owner=request.user)
 
     if request.method == 'POST':
@@ -220,7 +240,7 @@ def question_add(request, pk):
             question.quiz = quiz
             question.save()
             messages.success(request, 'You may now add answers/options to the question.')
-            return redirect('course:question_change', quiz.pk, question.pk)
+            return redirect('course:question_change', c_pk, quiz.pk, question.pk)
     else:
         form = QuestionForm()
 
@@ -228,7 +248,7 @@ def question_add(request, pk):
 
 @login_required
 @instructor_required
-def question_change(request, quiz_pk, question_pk):
+def question_change(request, c_pk, quiz_pk, question_pk):
     # Simlar to the `question_add` view, this view is also managing
     # the permissions at object-level. By querying both `quiz` and
     # `question` we are making sure only the owner of the quiz can
@@ -257,7 +277,7 @@ def question_change(request, quiz_pk, question_pk):
                 form.save()
                 formset.save()
             messages.success(request, 'Question and answers saved with success!')
-            return redirect('course:quiz_change', quiz.pk)
+            return redirect('course:quiz_change', c_pk, quiz.pk)
     else:
         form = QuestionForm(instance=question)
         formset = AnswerFormSet(instance=question)
@@ -292,7 +312,7 @@ class QuestionDeleteView(DeleteView):
 
     def get_success_url(self):
         question = self.get_object()
-        return reverse('course:quiz_change', kwargs={'pk': question.quiz_id})
+        return reverse('course:quiz_change', kwargs={'pk': question.quiz_id, 'c_pk': self.request.path.split("/")[2]})
 
 
 @method_decorator([login_required, student_required], name='dispatch')
