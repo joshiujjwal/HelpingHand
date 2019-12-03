@@ -115,13 +115,13 @@ def instructor_course(request,c_pk):
             transcript = file1.read()
             print(transcript)
             video.owner_id = request.user.id
-            video.subject_id = pk
+            video.subject_id = c_pk
             video.transcript = transcript
             video.save()
             messages.success(request,"Video added")
             print(Videos.objects.get(name=name))
-            return HttpResponseRedirect('/course/{}'.format(pk))
-    return render(request, "course/course.html", {"pk": pk, "course": course_name, "video_form":video_form, "all_current_videos":all_current_videos})
+            return HttpResponseRedirect('/course/{}'.format(c_pk))
+    return render(request, "course/course.html", {"c_pk": c_pk, "course": course_name, "video_form":video_form, "all_current_videos":all_current_videos})
 
 
 
