@@ -6,11 +6,23 @@
 
 
 <h2>Job Listings</h2>
-<table>
+<table style="width:100%">
+  <tr>
+    <th>Job Name</th>
+    <th>Job Description</th>
+    <th>Skills Needed</th>
+      <th>Hourly Pay</th>
+
+  </tr>
 
 {% for job in jobs %}
     <tr>
-        <td>{{job}}</td>
+        <td>{{job.job_name}}</td>
+        <td>{{job.job_description}}</td>
+        <td>{{job.skills_needed}}</td>
+        <td>{{job.hourly_pay}}</td>
+
+
     </tr>
 {%endfor%}
         </table>

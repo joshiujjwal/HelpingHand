@@ -13,6 +13,7 @@ from django.forms import inlineformset_factory
 from user.models import User
 from .models import *
 from speech2text.speech2text import transcription
+from jobs.views import job as job
 
 @login_required
 def dashboard(request):
@@ -24,7 +25,7 @@ def dashboard(request):
             return instructor_dashboard(request)
         else:
             if user.is_recruiter:
-                return recruiter_dashboard(request)
+                return job(request)
             else:
                 return HttpResponseRedirect('/login')
 
