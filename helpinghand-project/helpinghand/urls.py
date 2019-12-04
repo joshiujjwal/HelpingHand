@@ -19,6 +19,9 @@ from django.contrib import admin
 from user import views as user_views
 from course import views as course_views
 from jobs import views as job_view
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 
 urlpatterns = [
@@ -36,3 +39,6 @@ urlpatterns = [
     path('jobs/listing/', job_view.job_listing_page, name='job_listing'),
 
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

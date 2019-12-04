@@ -5,7 +5,19 @@
 
 {% block content %}
 
-<h4> Welcome to course -- {{course}}</h4>
+        <!--Advertise Area Start-->
+        <div class="container advertise-area text-center section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4> Welcome to {{course}} course</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Advertise Area-->
+
+
 {% if user.is_authenticated %}
 
 {% if user.is_student %}
@@ -36,6 +48,8 @@
 {% elif user.is_instructor %}
 
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
+<div class="container">
+
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'course:course' c_pk%}">Videos</a>
@@ -44,17 +58,44 @@
       <a class="nav-link" href="{% url 'course:quiz_change_list' c_pk %}">Quiz</a>
     </li>
   </ul>
+</div>
 
 
-  {{all_current_videos}}
-  <hr> Add Videos<br>
-  <form method="post">
-      {%csrf_token%}
-      {{video_form}}
-      <input type="submit" class="btn btn-dark btn-lg" value="Post a video">
-      <hr>
+  <div class="container d-flex justify-content-center">
+      <div class="account-form col-md-6 ">
+          <div class="register-title">
+              <i class="fa fa-lock"></i>
+              <h4>Add a Video</h4>
+          </div>
+          <form method="post" novalidate>
+                  {%csrf_token%}
+                  {{video_form}}
+              <button type="submit" class="button-default">Post a Video</button>
+          </form>
+      </div>
+  </div>
 
-  </form>
+          <!--Advertise Area Start-->
+          <div class="container ">
+          <div class="advertise-area text-center section-gray">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h6> Current Videos</h6>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% if all_current_videos|length %}
+          {{all_current_videos}}
+          {% else %}
+          <h4> You donot have any uploaded Videos for the course.</h4>
+          {%endif%}
+        </div>
+          <!--End of Advertise Area-->
+
+
+
 
 
 

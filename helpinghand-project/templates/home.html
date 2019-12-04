@@ -1,14 +1,180 @@
-<!-- templates/home.html -->
 {% extends 'base.html' %}
-
-{% block title %}Home{% endblock %}
-
+{% load static %}
 {% block content %}
+      
+         
+        <!--Slider Area Start-->
+        <div class="slider-area slider-style-1">
+            <div class="preview-2">
+                <div id="nivoslider" class="slides">	
+                    <img src=" {% static 'img/slider/1.jpg' %}" alt="" title="#slider-1-caption1"/>
+                </div> 
+                <div id="slider-1-caption1" class="nivo-html-caption nivo-caption">
+                    <div class="banner-content slider-1">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-7 col-md-7">
+                                    <div class="text-content">
+                                        <h1 class="title1">Up-Skilling for elderly</h1>
+                                        <p class="sub-title">Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo<br> at susp, vivamus orci urna.</p>
+                                        <div class="banner-readmore">
+                                            <a title="Read more" href="{% url 'signup' %}">Enroll now</a>	
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>	  
+            </div>
+        </div>
+        <!--End of Slider Area-->
+        <!--Activity Area Start-->
+        <div class="activity-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 activity">
+                        <div class="single-activity">
+                            <div class="single-activity-icon">
+                                <i class="fa fa-code"></i>
+                            </div>
+                            <h4>Coding</h4>
+                            <p>Fusce pretium, est at aliquam semper, leo ante facilisis risus in feugiat ipsum augue pellent esque metu.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 activity">
+                        <div class="single-activity">
+                            <div class="single-activity-icon">
+                                <i class="fa fa-leaf"></i>
+                            </div>
+                            <h4>Knitting</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 activity">
+                        <div class="single-activity mrg-res-top-md">
+                            <div class="single-activity-icon">
+                                <i class="fa fa-rocket"></i>
+                            </div>
+                            <h4>Digital Marketing</h4>
+                            <p>It was popularised in the 1960s with the release of Letraset sheets release containing Lorem Ipsum passages</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 activity">
+                        <div class="single-activity mrg-res-top-md">
+                            <div class="single-activity-icon">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                            <h4>Design</h4>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page looking at layout</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Activity Area-->
+        <!--Advertise Area Start-->
+        <div class="advertise-area text-center section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Looking to learn new <span>marketable</span> skill and <span>Earn</span>?</h2>
+                        <a href="{% url 'signup' %}">Join Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Advertise Area-->
+        <!--Class Area Start-->
+        <div class="class-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title-wrapper">
+                            <div class="section-title">
+                                <h3>Our Courses</h3>
+                                <p>We have wide range of subjects</p>
+                            </div>
+                        </div> 
+                    </div>       
+                </div>
+                <div class="class-carousel carousel-style-one owl-carousel">
+                    <div class="single-class">
+                        <div class="single-class-text">
+                            <div class="class-des">
+                                <h4><a href="#">Coding</a></h4>
+                                <p>The concept of the activity room is about 'Learning', through play, in a totally different environment. The perfect class for your child with the best.</p>
+                            </div>
 
-{% if user.is_authenticated %}
+                        </div>
+                    </div>
+                    <div class="single-class">
+                        <div class="single-class-text">
+                            <div class="class-des">
+                                <h4><a href="#">Knitting</a></h4>
+                                <p>The students learn different skills like rhythm, flexibility, and coordination. Lorem ipsum dolor sit amet. The perfect class for your child with the best.</p>
+                            </div>
 
+                        </div>
+                    </div>
+                    <div class="single-class">
+                        <div class="single-class-text">
+                            <div class="class-des">
+                                <h4><a href="#">Design</a></h4>
+                                <p>orem ipsum dolor sit amet, consectetur adipisicing elit. Facilis fugit perferendis adipisicing quam quis. Ab alias amet animir explica.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <!--End of Class Area-->
 
+    
+        <!--Fun Factor Area Start-->
+        <div class="fun-factor-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                        <div class="single-fun-factor">
+                            <div class="fun-factor-icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h2><span class="counter">25</span></h2>
+                            <span>Teacher</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                        <div class="single-fun-factor">
+                            <div class="fun-factor-icon">
+                                <i class="fa fa-bank"></i>
+                            </div>
+                            <h2><span class="counter">45</span></h2>
+                            <span>Recruiters</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                        <div class="single-fun-factor">
+                            <div class="fun-factor-icon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <h2><span class="counter">55</span></h2>
+                            <span>Students</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                        <div class="single-fun-factor no-margin">
+                            <div class="fun-factor-icon">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <h2><span class="counter">250</span></h2>
+                            <span>Teaching Hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Fun Factor Area-->
 
-{% endif %}
-
-{% endblock %}
+        {% endblock %}
+      
