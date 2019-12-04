@@ -13,10 +13,10 @@ def transcription(name, url):
     # for id,value in video_id_list.items():
     video_id = url.split("=")[1]
     print(video_id)
-    dict =YouTubeTranscriptApi.get_transcript("sF_jSrBhdlg&list="+video_id)
+    dict =YouTubeTranscriptApi.get_transcript(video_id)
     file = open(r"transcript_"+name+".txt", "a+")
 
     for i in dict:
-        file.write(i["text"]+"\n")
+        file.write(i["text"])
     file.close()
 
