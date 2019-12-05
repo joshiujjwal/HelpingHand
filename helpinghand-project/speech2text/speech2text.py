@@ -13,7 +13,7 @@ def transcription(name, url):
     # for id,value in video_id_list.items():
     video_id = url.split("=")[1]
     print(video_id)
-    dict =YouTubeTranscriptApi.get_transcript(video_id)
+    dict =YouTubeTranscriptApi.get_transcript(video_id,languages=['en'])
     file = open(r"transcript_"+name+".txt", "a+")
 
     for i in dict:

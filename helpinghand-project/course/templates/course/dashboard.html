@@ -11,125 +11,124 @@
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
 <div class="container">
 
-        <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a class="nav-item nav-link active" id="nav-mycourse-tab" data-toggle="tab" href="#nav-mycourse" role="tab" aria-controls="nav-mycourse" aria-selected="true">My Courses</a>
-                  <a class="nav-item nav-link" id="nav-available_course-tab" data-toggle="tab" href="#nav-available_course" role="tab" aria-controls="nav-available_course" aria-selected="false">Available Course</a>
-                </div>
-              </nav>
-              <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-mycourse" role="tabpanel" aria-labelledby="nav-mycourse-tab">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-mycourse-tab" data-toggle="tab" href="#nav-mycourse" role="tab"
+                aria-controls="nav-mycourse" aria-selected="true">My Courses</a>
+            <a class="nav-item nav-link" id="nav-available_course-tab" data-toggle="tab" href="#nav-available_course"
+                role="tab" aria-controls="nav-available_course" aria-selected="false">Available Course</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-mycourse" role="tabpanel" aria-labelledby="nav-mycourse-tab">
 
-                        <div class="class-list-area section-padding">
-                                <div class="container">
-                                        <div class="row">
-                                                <div class="col-xl-9 col-lg-8"> 
-                
-                                                        {% for form in enrolled_formset %}
-                    <form method="post">
-                        {%csrf_token%}
-                
-                
-                 
-                
-                 
-                
+            <div class="class-list-area section-padding">
+                <div class="container">
                     <div class="row">
-                            <div class="col-xl-5 col-lg-6 col-md-6">
-                                <a href="#"><img src="{% static 'img/gallery/9.jpg' %}" alt=""></a>
-                            </div>
-                            <form method="post"></form>
-                            <div class="col-xl-7 col-lg-6 col-md-6">
-                                <div class="class-list-text">
-                                    <h3><a href="#">{{form.name}}</a></h3>
-                                    <div class="class-information">
-                                        <span>Class Size: 38</span>
-                                        <span>Start Date: March 25, 2020</span>
+                        <div class="col-xl-9 col-lg-8">
+
+                            {% for form in enrolled_formset %}
+                            <form method="post">
+                                {%csrf_token%}
+                                <div class="row">
+                                    <div class="col-xl-5 col-lg-6 col-md-6">
+                                        <a href="#"><img src="{% static 'img/gallery/9.jpg' %}" alt=""></a>
                                     </div>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen. </p>
-                                    <a class="button-default" href="{% url 'course:course' c_pk=form.initial.course_id %}"> Go to Course</a>
-                                    <input type="submit" class="button-default" style="background-color: #f5b120 !important;" value="Unenroll">
+                                    <form method="post"></form>
+                                    <div class="col-xl-7 col-lg-6 col-md-6">
+                                        <div class="class-list-text">
+                                            <h3><a href="#">{{form.name}}</a></h3>
+                                            <div class="class-information">
+                                                <span>Class Size: 38</span>
+                                                <span>Start Date: March 25, 2020</span>
+                                            </div>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen. </p>
+                                            <a class="button-default" href="{% url 'course:course' c_pk=form.initial.course_id %}"> Go to Course</a>
+                                            <input type="submit" class="button-default"
+                                                style="background-color: #f5b120 !important;" value="Unenroll">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
+                            </form>
+
+                            {% endfor %}
+
                         </div>
-                
-                    </form>
-                
-                    {% endfor %}
-                
-                                                    </div></div></div></div>
-
-
-
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="nav-available_course" role="tabpanel" aria-labelledby="nav-available_course-tab">
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-available_course" role="tabpanel" aria-labelledby="nav-available_course-tab">
 
-                        <div class="class-list-area section-padding">
-                                <div class="container">
-                                        <div class="row">
-                                                <div class="col-xl-9 col-lg-8"> 
-                
-                                                        {% for form in available_formset %}
-                    <form method="post">
-                        {%csrf_token%}
-                
-                
-                 
-                
-                 
-                
+            <div class="class-list-area section-padding">
+                <div class="container">
                     <div class="row">
-                            <div class="col-xl-5 col-lg-6 col-md-6">
-                                <a href="#"><img src="{% static 'img/gallery/9.jpg' %}" alt=""></a>
-                            </div>
-                            <form method="post"></form>
-                            <div class="col-xl-7 col-lg-6 col-md-6">
-                                <div class="class-list-text">
-                                    <h3><a href="#">{{form.name}}</a></h3>
-                                    <div class="class-information">
-                                        <span>Class Size: 38</span>
-                                        <span>Start Date: March 25, 2020</span>
+                        <div class="col-xl-9 col-lg-8">
+
+                            {% for form in available_formset %}
+                            <form method="post">
+                                {%csrf_token%}
+                                <div class="row">
+                                    <div class="col-xl-5 col-lg-6 col-md-6">
+                                        <a href="#"><img src="{% static 'img/gallery/9.jpg' %}" alt=""></a>
                                     </div>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen. </p>
-                                    <a class="button-default" href="{% url 'course:course' c_pk=form.initial.course_id %}"> Go to Course</a>
-                                    <input type="submit" class="button-default" value="Enroll in a Course">
+                                    <form method="post"></form>
+                                    <div class="col-xl-7 col-lg-6 col-md-6">
+                                        <div class="class-list-text">
+                                            <h3><a href="#">{{form.name}}</a></h3>
+                                            <div class="class-information">
+                                                <span>Class Size: 38</span>
+                                                <span>Start Date: March 25, 2020</span>
+                                            </div>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen. </p>
+                                            <input type="submit" class="button-default" value="Enroll in a Course">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
+                            </form>
+
+                            {% endfor %}
+
                         </div>
-                
-                    </form>
-                
-                    {% endfor %}
-                
-                                                    </div></div></div></div>
-
-                    
+                    </div>
                 </div>
-              </div>
+            </div>
 
 
-    
+        </div>
+    </div>
 
 
 
-        
-                                    
+
+
+
+
+
 
 
     {% elif user.is_instructor %}
 
-      <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-        </div>
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+    </div>
 
-  <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center">
         <div class="account-form col-md-6 ">
             <div class="register-title">
                 <i class="fa fa-lock"></i>
                 <h4>Add a Course</h4>
             </div>
             <form method="post" novalidate>
-                    {%csrf_token%}
-                    {{form}}
+                {%csrf_token%}
+                {{form}}
                 <button type="submit" class="button-default">Add a Course</button>
             </form>
         </div>
@@ -137,50 +136,57 @@
 
 
 
-        <!--Advertise Area Start-->
-        <div class="container advertise-area text-center section-gray">
-                <div class="container">
+    <!--Advertise Area Start-->
+    <div class="container advertise-area text-center section-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2> My Courses </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of Advertise Area-->
+
+    <div class="class-list-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8">
+
+
+                    {%for course in enrolled_course%}
+
+
                     <div class="row">
-                        <div class="col-md-12">
-                            <h2> My Courses </h2>
+                        <div class="col-xl-5 col-lg-6 col-md-6">
+                            <a href="#"><img src="{% static 'img/gallery/9.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="col-xl-7 col-lg-6 col-md-6">
+                            <div class="class-list-text">
+                                <h3><a href="#">{{course.name}}</a></h3>
+                                <div class="class-information">
+                                    <span>Class Size: 38</span>
+                                    <span>Start Date: March 25, 2020</span>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                                    unknown printer took a galley of type and scrambled it to make a type specimen. </p>
+                                <a href="{% url 'course:course' c_pk=course.id %}" class="button-default">Go to Course
+                                    <i class="fa fa-angle-right"></i></a>
+                            </div>
                         </div>
                     </div>
+
+                    {%endfor%}
+
+
                 </div>
             </div>
-            <!--End of Advertise Area-->
-       
-        <div class="class-list-area section-padding">
-                <div class="container">
-                        <div class="row">
-                                <div class="col-xl-9 col-lg-8">
-
-
-        {%for course in enrolled_course%}
-
-
-        <div class="row">
-                <div class="col-xl-5 col-lg-6 col-md-6">
-                    <a href="#"><img src="{% static 'img/gallery/9.jpg' %}" alt=""></a>
-                </div>
-                <div class="col-xl-7 col-lg-6 col-md-6">
-                    <div class="class-list-text">
-                        <h3><a href="#">{{course.name}}</a></h3>
-                        <div class="class-information">
-                            <span>Class Size: 38</span>
-                            <span>Start Date: March 25, 2020</span>
-                        </div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen. </p>
-                        <a href="{% url 'course:course' c_pk=course.id %}" class="button-default">Go to Course <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
-        {%endfor%}
-
-
-        </div></div></div></div>
+        </div>
+    </div>
 
     {% else %}
+
 
 
 

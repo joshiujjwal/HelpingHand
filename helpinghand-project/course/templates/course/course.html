@@ -1,10 +1,38 @@
 <!-- templates/course/course.html -->
+
+<script>
+  function getId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+  
+      return (match && match[2].length === 11)
+        ? match[2]
+        : null;
+  }
+  var base_font = 1.0;
+  function resizeUP(){
+      base_font+= 0.2;
+      var allTranscripts = document.getElementsByClassName('trans_par');
+      for (var i = 0; i < allTranscripts.length; i++) {
+        allTranscripts[i].style.fontSize = base_font+"rem";
+      }
+    }
+    function resizeDOWN(){
+      base_font -= 0.2;
+      var allTranscripts = document.getElementsByClassName('trans_par');
+      for (var i = 0; i < allTranscripts.length; i++) {
+        allTranscripts[i].style.fontSize = base_font+"rem";
+      }
+    }
+  </script>
+
+  
 {% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
+<div class="container">
         <!--Advertise Area Start-->
         <div class="container advertise-area text-center section-gray">
             <div class="container">
@@ -35,16 +63,29 @@
     </li>
   </ul>
 
-  {% for videos in all_videos%}
-  {{ videos.url}}
-<details>
-    <summary>View Transcript</summary>
 
-  {{ videos.transcript}}
-</details>
-  <br>
+<p id="demo"></p>
 
-  {% endfor %}
+  <script>
+    var videohtml="";
+    var transcripthtml="";
+    {% for videos in all_videos %}
+    videohtml+='<hr><iframe width="560" height="315" src="//www.youtube.com/embed/' 
+    + getId('{{ videos.url }}') + '" frameborder="0" allowfullscreen></iframe><br>';
+    
+    //transcript generation part
+    videohtml+=`'<details><summary>View Transcript</summary>\
+    <button onclick="javascript:resizeUP()">+</button><button onclick="javascript:resizeDOWN()">-</button>\
+    <p class="trans_par">{{ videos.transcript}}</p></details><hr>'`;
+    
+    
+    {% endfor %}
+    document.getElementById("demo").innerHTML = videohtml;
+  </script>
+    {% for videos in all_videos %}
+    {{videos.url}}
+    {%endfor%}
+
 {% elif user.is_instructor %}
 
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
@@ -114,4 +155,6 @@
 {% endif %}
 
 {% endif %}
+
+</div>
 {% endblock %}
