@@ -325,7 +325,7 @@ class StudentQuizListView(ListView):
         student = self.request.user.student
         student_enrolled_courses = student.enrolled_courses.values_list('pk', flat=True)
         taken_quizzes = student.quizzes.values_list('pk', flat=True)
-        queryset = Quiz.objects.filter(course__in=student_enrolled_courses) \
+        queryset = Quiz.objects.filter(course__in=student_enrolled_courses).filter(course_id__in=self.request.path.split("/")[2]) \
             .exclude(pk__in=taken_quizzes) \
             .annotate(questions_count=Count('questions')) \
             .filter(questions_count__gt=0)
@@ -340,7 +340,7 @@ class TakenQuizListView(ListView):
 
     def get_queryset(self):
         queryset = self.request.user.student.taken_quizzes \
-            .select_related('quiz', 'quiz__course') \
+            .select_related('quiz', 'quiz__course').filter(quiz__course=Course.objects.get(id=self.request.path.split("/")[2])) \
             .order_by('quiz__name')
         return queryset
 
