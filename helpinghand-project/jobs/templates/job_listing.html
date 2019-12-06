@@ -1,33 +1,56 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Job_Listing{% endblock %}
-
 {% block content %}
 
-
-<h2>Job Listings</h2>
-<table style="width:100%">
-      <tr>
-    <th>Job name</th>
-    <th>Job description</th>
-    <th>Skills Needed</th>
-          <th>Hourly Pay</th>
-
-
-  </tr>
-
-
-{% for job in jobs %}
+     <!--Advertise Area Start-->
+     <div class="container advertise-area text-center section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                            <h2>Job Listings</h2>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Advertise Area-->
 
 
-    <tr>
-        <td><li>{{job}}</li></td>
-        <td>{{job.job_description}}</td>
-    <td>{{job.skills_needed}}</td>
-        <td>{{job.hourly_pay}}</td>
-    </tr>
-{%endfor%}
-        </table>
+        <div class="class-list-area section-padding">
+                <div class="container">
+                        <div class="row">
+                        
+                                      
+
+                                        <div class="col-md-4">
+                                                {% for job in jobs %}
+                                                <div class="single-class">
+                                                    <div class="single-class-image">
+                                                        <a href="#">
+                                                            <img src="{% static 'img/gallery/1.jpg' %}" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="single-class-text">
+                                                        <div class="class-des">
+                                                            <h4><a href="#">{{job}}</a></h4>
+<p>{{job.job_description}} </p>                                                        </div>
+                                                        <div class="class-schedule">
+                                                            <span>Skills: {{job.skills_needed}}</span>
+                                                            <span>Hourly: {{job.hourly_pay}}</span>
+                                                            <span class="arrow"><a href="#"><i class="fa fa-angle-right"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 {%endfor%}
+                                            </div>
+                                           
+
+                                </div></div></div>
+
+
+
+
 
 
 {% endblock %}

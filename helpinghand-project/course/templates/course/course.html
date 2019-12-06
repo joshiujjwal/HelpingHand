@@ -1,11 +1,51 @@
 <!-- templates/course/course.html -->
+
+<script>
+  function getId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+  
+      return (match && match[2].length === 11)
+        ? match[2]
+        : null;
+  }
+  var base_font = 1.0;
+  function resizeUP(){
+      base_font+= 0.2;
+      var allTranscripts = document.getElementsByClassName('trans_par');
+      for (var i = 0; i < allTranscripts.length; i++) {
+        allTranscripts[i].style.fontSize = base_font+"rem";
+      }
+    }
+    function resizeDOWN(){
+      base_font -= 0.2;
+      var allTranscripts = document.getElementsByClassName('trans_par');
+      for (var i = 0; i < allTranscripts.length; i++) {
+        allTranscripts[i].style.fontSize = base_font+"rem";
+      }
+    }
+  </script>
+
+  
 {% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<div class="container">
+        <!--Advertise Area Start-->
+        <div class="container advertise-area text-center section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4> Welcome to {{course}} course</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Advertise Area-->
 
-<h4> Welcome to course -- {{course}}</h4>
+
 {% if user.is_authenticated %}
 
 {% if user.is_student %}
@@ -23,19 +63,31 @@
     </li>
   </ul>
 
-  {% for videos in all_videos%}
-  {{ videos.url}}
-<details>
-    <summary>View Transcript</summary>
 
-  {{ videos.transcript}}
-</details>
-  <br>
+<p id="demo"></p>
 
-  {% endfor %}
+  <script>
+    var videohtml="";
+    var transcripthtml="";
+    {% for videos in all_videos %}
+    videohtml+='<hr><iframe width="560" height="315" src="//www.youtube.com/embed/' 
+    + getId('{{ videos.url }}') + '" frameborder="0" allowfullscreen></iframe><br>';
+    
+    //transcript generation part
+    videohtml+=`'<details><summary>View Transcript</summary>\
+    <button onclick="javascript:resizeUP()">+</button><button onclick="javascript:resizeDOWN()">-</button>\
+    <p class="trans_par">{{ videos.transcript}}</p></details><hr>'`;
+    
+    
+    {% endfor %}
+    document.getElementById("demo").innerHTML = videohtml;
+  </script>
+
 {% elif user.is_instructor %}
 
 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert"></div>
+<div class="container">
+
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
       <a class="nav-link active" href="{% url 'course:course' c_pk%}">Videos</a>
@@ -44,17 +96,69 @@
       <a class="nav-link" href="{% url 'course:quiz_change_list' c_pk %}">Quiz</a>
     </li>
   </ul>
+</div>
 
 
-  {{all_current_videos}}
-  <hr> Add Videos<br>
-  <form method="post">
-      {%csrf_token%}
-      {{video_form}}
-      <input type="submit" class="btn btn-dark btn-lg" value="Post a video">
-      <hr>
+  <div class="container d-flex justify-content-center">
+      <div class="account-form col-md-6 ">
+          <div class="register-title">
+              <i class="fa fa-lock"></i>
+              <h4>Add a Video</h4>
+          </div>
+          <form method="post" novalidate>
+                  {%csrf_token%}
+                  {{video_form}}
+              <button type="submit" class="button-default">Post a Video</button>
+          </form>
+      </div>
+  </div>
 
-  </form>
+          <!--Advertise Area Start-->
+          <div class="container ">
+          <div class="advertise-area text-center section-gray">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h6> Current Videos</h6>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% if all_current_videos|length %}
+
+          <p id="demo1"></p>
+
+  <script>
+    var videohtml="";
+    var transcripthtml="";
+    {% for videos in all_current_videos %}
+    videohtml+='<hr><iframe width="560" height="315" src="//www.youtube.com/embed/' 
+    + getId('{{ videos.url }}') + '" frameborder="0" allowfullscreen></iframe><br>';
+    
+    //transcript generation part
+    videohtml+=`'<details><summary>View Transcript</summary>\
+    <button onclick="javascript:resizeUP()">+</button><button onclick="javascript:resizeDOWN()">-</button>\
+    <p class="trans_par">{{ videos.transcript}}</p></details><hr>'`;
+    
+    
+    {% endfor %}
+    document.getElementById("demo1").innerHTML = videohtml;
+
+
+
+</script>
+
+
+
+
+          {% else %}
+          <h4> You donot have any uploaded Videos for the course.</h4>
+          {%endif%}
+        </div>
+          <!--End of Advertise Area-->
+
+
+
 
 
 
@@ -73,4 +177,6 @@
 {% endif %}
 
 {% endif %}
+
+</div>
 {% endblock %}

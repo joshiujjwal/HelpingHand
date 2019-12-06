@@ -5,11 +5,34 @@
 {% block content %}
 {% load crispy_forms_tags%}
 
-<form method="POST">
-    {%csrf_token%}
-    {{jobForm|crispy}}
-    <input type="submit">
+      <!--Advertise Area Start-->
+      <div class="container advertise-area text-center section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2> All Jobs </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Advertise Area-->
 
-</form>
+
+        <div class="container d-flex justify-content-center">
+                <div class="account-form col-md-6 ">
+                    <div class="register-title">
+                        <i class="fa fa-lock"></i>
+                        <h4>Add a Job </h4>
+                    </div>
+                    <form method="post" novalidate>
+                            {%csrf_token%}
+                            {{jobForm}}
+                        <button type="submit" class="button-default">Add a Job</button>
+                    </form>
+                </div>
+            </div>
+        
+
+
 
 {% endblock %}

@@ -1,11 +1,65 @@
 
+
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <h2>Sign up for a free account</h2>
-  <p class="lead">Select below the type of account you want to create</p>
-  <a href="{% url 'student_signup' %}" class="btn btn-student btn-lg" role="button">I'm a student</a>
-  <a href="{% url 'instructor_signup' %}" class="btn btn-teacher btn-lg" role="button">I'm a instructor</a>
-  <a href="{% url 'recruiter_signup' %}" class="btn btn-teacher btn-lg" role="button">I'm a recruiter</a>
+
+
+
+        <!--Advertise Area Start-->
+        <div class="advertise-area text-center section-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                            <h2>Looking to learn new <span>marketable</span> skill and <span>Earn</span>?</h2>
+                            <a href="{% url 'signup' %}">Join Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Activity Area Start-->
+        <div class="activity-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6 activity">
+                            <div class="single-activity">
+                                <div class="single-activity-icon">
+                                    <i class="fa  fa-graduation-cap"></i>
+                                </div>
+                                <a href="{% url 'student_signup' %}"><h4>I'm a Student</h4></a>
+
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 activity">
+                            <div class="single-activity">
+                                <div class="single-activity-icon">
+                                    <i class="fa fa-university"></i>
+                                </div>
+                                <a href="{% url 'instructor_signup' %}"><h4 >I'm a Instructor</h4></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 activity">
+                            <div class="single-activity mrg-res-top-md">
+                                <div class="single-activity-icon">
+                                    <i class="fa fa-building"></i>
+                                </div>
+                                <a href="{% url 'recruiter_signup' %}"> <h4>I'm a recruiter</h4></a>
+
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End of Activity Area-->
+
+
+
+
+
 
 {% endblock %}

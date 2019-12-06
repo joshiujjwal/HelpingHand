@@ -82,6 +82,7 @@ def instructor_dashboard(request):
 
 @login_required
 def course(request,c_pk):
+    print(c_pk)
     user = User.objects.get(id=request.user.id)
     if user.is_student:
         return student_course(request,c_pk)
