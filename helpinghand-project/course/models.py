@@ -5,7 +5,7 @@ from user.models import *
 # Create your models here.
 class Course(models.Model):
     name = models.CharField(max_length=30)
-    color = models.CharField(max_length=7, default='#007bff')
+    color = models.CharField(max_length=7, default='#1bb4b9')
 
     def __str__(self):
         return self.name

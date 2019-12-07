@@ -24,16 +24,16 @@
   </nav>
   <h2 class="mb-3">
     {{ quiz.name }}
-    <a href="{% url 'course:quiz_results' request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-primary float-right">View results</a>
+    <a href="{% url 'course:quiz_results' request.path|split:'/'|getValue:'2' quiz.pk %}" class="button-default float-right">View results</a>
   </h2>
   <div class="row mb-3">
     <div class="col-md-6 col-sm-8 col-12">
       <form method="post" novalidate>
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-success">Save changes</button>
-        <a href="{% url 'course:quiz_change_list' request.path|split:'/'|getValue:'2' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
-        <a href="{% url 'course:quiz_delete' request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-danger float-right">Delete</a>
+        <br>
+        <button type="submit" class="button-default">Save changes</button>
+        <a href="{% url 'course:quiz_delete' request.path|split:'/'|getValue:'2' quiz.pk %}" class="button-default" style="background-color: red;">Delete</a>
       </form>
     </div>
   </div>
@@ -67,7 +67,7 @@
       {% endfor %}
     </div>
     <div class="card-footer">
-      <a href="{% url 'course:question_add' request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-primary btn-sm">Add question</a>
+      <a href="{% url 'course:question_add' request.path|split:'/'|getValue:'2' quiz.pk %}" class="button-default">Add question</a>
     </div>
   </div>
 </div>

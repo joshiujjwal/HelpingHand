@@ -21,7 +21,7 @@
     </ol>
   </nav>
   <h2 class="mb-3">My Quizzes</h2>
-  <a href="{% url 'course:quiz_add' request.path|split:'/'|getValue:'2' %}" class="btn btn-primary mb-3" role="button">Add quiz</a>
+  <a href="{% url 'course:quiz_add' request.path|split:'/'|getValue:'2' %}" class="button-default mb-3" role="button">Add quiz</a>
   <div class="card">
     <table class="table mb-0">
       <thead>
@@ -41,7 +41,7 @@
             <td class="align-middle">{{ quiz.questions_count }}</td>
             <td class="align-middle">{{ quiz.taken_count }}</td>
             <td class="text-right">
-              <a href="{% url 'course:quiz_results'  request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-primary">View results</a>
+              <a href="{% url 'course:quiz_results'  request.path|split:'/'|getValue:'2' quiz.pk %}" class="button-default">View results</a>
             </td>
           </tr>
         {% empty %}

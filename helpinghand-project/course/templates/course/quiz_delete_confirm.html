@@ -27,8 +27,9 @@
   <p class="lead">Are you sure you want to delete the quiz <strong>"{{ quiz.name }}"</strong>? There is no going back.</p>
   <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
-    <a href="{% url 'course:quiz_change' request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
+    <button type="submit" class="button-default " style="background-color: red;">Yes, I'm sure</button>
+    <a href="{% url 'course:quiz_change' request.path|split:'/'|getValue:'2' quiz.pk %}" class="button-default" style="background-color: transparent; border: 2px solid gray; color: black;" role="button">Nevermind</a>
   </form>
+  <br>
 </div>
 {% endblock %}
