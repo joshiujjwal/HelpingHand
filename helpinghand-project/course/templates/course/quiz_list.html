@@ -31,10 +31,10 @@
         {% for quiz in quizzes %}
           <tr>
             <td class="align-middle">{{ quiz.name }}</td>
-            <td class="align-middle">{{ quiz.course.get_html_badge }}</td>
+            <td class="align-middle" >{{ quiz.course.get_html_badge }}</td>
             <td class="align-middle">{{ quiz.questions_count }} questions</td>
             <td class="text-right">
-              <a href="{% url 'course:take_quiz' request.path|split:'/'|getValue:'2' quiz.pk %}" class="btn btn-primary">Start quiz</a>
+              <a href="{% url 'course:take_quiz' request.path|split:'/'|getValue:'2' quiz.pk %}" class="button-default">Start quiz</a>
             </td>
           </tr>
         {% empty %}
